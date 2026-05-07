@@ -1,0 +1,25 @@
+#! /usr/bin/env bun
+
+
+
+console.log("calc 0.1.0");
+console.log("A simple cli calculator");
+console.log("");
+
+let input = "";  
+while (true) {
+    if (input == "q" || input == "quit" || input == "exit") {
+        break;
+    }
+
+    input = prompt("> ") || "";
+
+    calc(input);
+}
+
+
+
+function calc(input) {
+    console.log(input);
+}
+
