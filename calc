@@ -24,7 +24,7 @@ const TokenTypes = {
     "MINUS": "MINUS",
     "MULTIPLY": "MULTIPLY",
     "DIVIDE": "DIVIDE",
-    "PERCENT": "PERCENT",
+    // "PERCENT": "PERCENT",
     "LPAREN": "LPAREN",
     "RPAREN": "RPAREN"
 }
@@ -46,9 +46,10 @@ function lexer(input) {
             tokens.push({ type: TokenTypes.LPAREN, value: '(' });
         } else if (input[x] == ')') {
             tokens.push({ type: TokenTypes.RPAREN, value: ')' });
-        } else if (input[x] == '%'){
-            tokens.push({ type: TokenTypes.PERCENT, value: '%' });
-        }else if (/\d/.test(input[x])) {
+        } 
+        // else if (input[x] == '%'){
+        //     tokens.push({ type: TokenTypes.PERCENT, value: '%' });}
+        else if (/\d/.test(input[x])) {
             let num = '';
             while (x < input.length && /\d/.test(input[x]) || input[x] == '.') {
                 num += input[x];
