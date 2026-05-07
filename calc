@@ -22,6 +22,7 @@ const TokenTypes = {
     "MINUS": "MINUS",
     "MULTIPLY": "MULTIPLY",
     "DIVIDE": "DIVIDE",
+    "PERCENT": "PERCENT",
     "LPAREN": "LPAREN",
     "RPAREN": "RPAREN"
 }
@@ -43,13 +44,20 @@ function lexer(input) {
             tokens.push({ type: TokenTypes.LPAREN, value: '(' });
         } else if (input[x] == ')') {
             tokens.push({ type: TokenTypes.RPAREN, value: ')' });
-        } else if (/\d/.test(input[x])) {
+        } else if (input[x] == '%'){
+            tokens.push({ type: TokenTypes.PERCENT, value: '%' });
+        }else if (/\d/.test(input[x])) {
             let num = '';
-            while (x < input.length && /\d/.test(input[x])) {
+            while (x < input.length && /\d/.test(input[x]) || input[x] == '.') {
                 num += input[x];
                 x++;
             }
-            tokens.push({ type: TokenTypes.NUMBER, value: parseInt(num) });
+            try {
+                tokens.push({ type: TokenTypes.NUMBER, value: parseFloat(num) });
+            } catch (error) {
+                tokens = `Error: Invalid number '${num}' at position ${x}`;
+                return tokens;
+            }
             continue;
         }else if (input[x] == ' '){
                 // skip whitespace
