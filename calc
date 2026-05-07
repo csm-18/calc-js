@@ -2,24 +2,90 @@
 
 
 
-console.log("calc 0.1.0");
-console.log("A simple cli calculator");
-console.log("");
-
-let input = "";  
-while (true) {
-    if (input == "q" || input == "quit" || input == "exit") {
-        break;
-    }
-
-    input = prompt("> ") || "";
-
-    calc(input);
-}
-
-
 
 function calc(input) {
-    console.log(input);
+    let tokens = lexer(input);
+    if (typeof tokens === "string") {
+        console.log(tokens); // error message
+        return; 
+    }
+    console.log(tokens);
+    
+    // let ast = parser(tokens);
+    // let result = evaluator(ast);
+    // console.log(result);
 }
+
+const TokenTypes = {
+    "NUMBER": "NUMBER",
+    "PLUS": "PLUS",
+    "MINUS": "MINUS",
+    "MULTIPLY": "MULTIPLY",
+    "DIVIDE": "DIVIDE",
+    "LPAREN": "LPAREN",
+    "RPAREN": "RPAREN"
+}
+
+
+function lexer(input) {
+    let tokens = [];
+    let x = 0;
+    while (x < input.length) {
+        if (input[x] == '+') {
+            tokens.push({ type: TokenTypes.PLUS, value: '+' });
+        } else if (input[x] == '-') {
+            tokens.push({ type: TokenTypes.MINUS, value: '-' });
+        } else if (input[x] == '*') {
+            tokens.push({ type: TokenTypes.MULTIPLY, value: '*' });
+        } else if (input[x] == '/') {
+            tokens.push({ type: TokenTypes.DIVIDE, value: '/' });
+        } else if (input[x] == '(') {
+            tokens.push({ type: TokenTypes.LPAREN, value: '(' });
+        } else if (input[x] == ')') {
+            tokens.push({ type: TokenTypes.RPAREN, value: ')' });
+        } else if (/\d/.test(input[x])) {
+            let num = '';
+            while (x < input.length && /\d/.test(input[x])) {
+                num += input[x];
+                x++;
+            }
+            tokens.push({ type: TokenTypes.NUMBER, value: parseInt(num) });
+            continue;
+        }else if (input[x] == ' '){
+                // skip whitespace
+        }else{
+            tokens = `Error: Unknown character '${input[x]}' at position ${x}`;
+            return tokens;
+        }
+        x+=1;
+    }
+
+
+
+    return tokens;
+}
+
+
+
+
+function main() {
+    console.log("calc 0.1.0");
+    console.log("A simple cli calculator");
+    console.log("");
+
+    let input = "";  
+    while (true) {
+        input = prompt("> ") || "";
+        if (input == "q" || input == "quit" || input == "exit") {
+            break;
+        }
+
+        calc(input);
+    }
+}
+
+main();
+
+
+
 
