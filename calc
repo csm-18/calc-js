@@ -9,9 +9,11 @@ function calc(input) {
         console.log(tokens); // error message
         return; 
     }
-    console.log(tokens);
+    // console.log(tokens);
     
-    // let ast = parser(tokens);
+    let ast = parser(tokens);
+    console.log(ast);
+    
     // let result = evaluator(ast);
     // console.log(result);
 }
@@ -73,6 +75,11 @@ function lexer(input) {
     return tokens;
 }
 
+function parser(tokens) {
+    let ast ={}
+
+    return ast;
+}
 
 
 
